@@ -18,13 +18,56 @@ const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
+window.addEventListener('resize', () =>
+    {
+    console.log('window has been resized')
+    })
+
 /**
  * Sizes
  */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-    }
+window.addEventListener('resize', () =>
+    {
+    // Update sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+    // Update camera
+    camera.aspect = sizes.width / sizes.height
+    
+    camera.updateProjectionMatrix()
+    // Update renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    })
+
+    window.addEventListener('dblclick', () =>
+        {
+        const fullscreenElement = document.fullscreenElement ||
+        document.webkitFullscreenElement
+        if(!fullscreenElement)
+        {
+        if(canvas.requestFullscreen)
+        {
+        canvas.requestFullscreen()
+        }
+        else if(canvas.webkitRequestFullscreen)
+        {
+        canvas.webkitRequestFullscreen()
+        }
+        }
+        else
+        {
+        if(document.exitFullscreen)
+        {
+        document.exitFullscreen()
+        }
+        else if(document.webkitExitFullscreen)
+        {
+        document.webkitExitFullscreen()
+        }
+        }
+        })
+        
 /**
  * Camera
  */
